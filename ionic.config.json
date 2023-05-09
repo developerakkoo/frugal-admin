@@ -1,0 +1,7 @@
+{
+  "name": "admin-frugal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
