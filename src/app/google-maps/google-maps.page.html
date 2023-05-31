@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Track</ion-title>
+    <ion-button (click)="dismiss()" slot="end" fill="clear">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="isLocationError == false"  #map id="map"  style="height: 100%; width: auto;"></div>
+  <ion-text *ngIf="isLocationError == true" class="ion-text-center" color="tertiary">
+    <h6> {{errorMessage | uppercase}} </h6>
+  </ion-text>
+</ion-content>

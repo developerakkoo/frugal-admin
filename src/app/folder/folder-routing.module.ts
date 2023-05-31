@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: FolderPage
+  },
+  {
+    path: 'vehicle-details/:id',
+    loadChildren: () => import('./vehicle-details/vehicle-details.module').then( m => m.VehicleDetailsPageModule)
+  },
+  {
+    path: 'add-vehicles',
+    loadChildren: () => import('./add-vehicles/add-vehicles.module').then( m => m.AddVehiclesPageModule)
   }
 ];
 

@@ -3,19 +3,222 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+    <ion-title>{{ folder | uppercase}}</ion-title>
+    <ion-button *ngIf="isVehicleAdd" (click)="openVehiclePage()" slot="end" expand="block" fill="clear" shape="round">
+      View Vehicles
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  
+  <ion-grid *ngIf="isHome">
+    <ion-row>
+      <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Approval Pending</ion-card-subtitle>
+            <ion-card-title>15</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('pending')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Category</ion-card-subtitle>
+            <ion-card-title>20</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('category')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Partner Active</ion-card-subtitle>
+            <ion-card-title> {{partners.length || 0}} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('partneractive')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Vehicles</ion-card-subtitle>
+            <ion-card-title>60</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('vehicles')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Services</ion-card-subtitle>
+            <ion-card-title>33</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('services')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Customers</ion-card-subtitle>
+            <ion-card-title> {{customers.length}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('customers')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Partners InActive</ion-card-subtitle>
+            <ion-card-title>4</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-button (click)="view('partnerinactive')" expand="block" fill="clear">
+              View
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      
+     
+    </ion-row>
+  </ion-grid>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-grid *ngIf="isPartner">
+    <ion-row>
+      <ion-col size="12">
+        <div class="w3-container">
+          <table class="w3-table-all w3-responsive">
+            <tr>
+              <th>Category</th>
+              <th>Driver Mobile No</th>
+              <th>Vehicle No</th>
+              <th>RC</th>
+              <th>CAPACITY</th>
+              <th>MODEL/TYPE</th>
+              <th>Rates</th>
+              <th>Driver Name</th>
+              <th>License</th>
+              <th>Police verification</th>
+              <!-- <th>Subscription</th> -->
+              <th>Subscription Ends On</th>
+              <th> Actions </th>
+              
+            </tr>
+      
+            <tr *ngFor="let item of partners" >
+              <td>  <input type="text" [value]="item.Category" name="" id="">  
+              </td>
+      
+              <td>  <input type="text" [value]="item.MobileNumber" name="" id=""> 
+                <button class="w3-blue w3-button w3-small" (click)="openGoogleMapsModel(item._id)">TRACK</button>
+              </td>
+              <td> <input type="text" [value]="item.VehicleNumber" name="" id="">  </td>
+              <!-- RC UPload  -->
+              <td> <a #rc target="_blank" [href]="item.RC" download hidden></a>  <button class="w3-button w3-teal" (click)="rc.click()">Download</button> </td>
+      
+            <td>  <input #cap type="text"  [value]="item.Capacity" name="" id="">  </td>
+            <td>  <input  #model type="text" [value]="item.ModelType" name="" id="">  </td>
+            <td>  <input  #rate type="text"  [value]="item.Rates" name="" id="">  </td>
+            <td>  <input type="text" [value]="item.DriverName" name="" id="">  </td>
+            
+              <!-- License  -->
+              <td>  <a #license target="_blank" [href]="item.License" download hidden></a>  <button class="w3-button w3-teal"  (click)="license.click()">Download</button></td>
+              <!-- Police Verify  -->
+              <td> <a #pv target="_blank" [href]="item.PoliceVerification" download hidden></a>  <button class="w3-button w3-teal" (click)="pv.click()">Download</button> </td>
+              <!-- <td> <button [disabled]="item.CanPunchesSubscription===false" class="w3-button w3-red" >Purchase</button> </td> -->
+              <td> {{item.subscriptionEndsOn}} </td>
+              <td>
+                <button class="w3-button w3-green" (click)="save(item._id, cap.value,model.value, rate.value)">SAVE</button>
+                <button class="w3-button w3-red" *ngIf="!item.isBlocked" (click)="block(item._id)">BLOCK</button>
+                <button class="w3-button w3-orange" *ngIf="item.isBlocked" (click)="block(item._id)">UNBLOCK</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="isCustomer">
+    <ion-row>
+      <ion-col>
+        <div class="w3-container">
+          <table class="w3-table-all w3-responsive">
+            <tr>
+              <th>Mobile Number</th>
+              <th>Date Created</th>
+            <th>Actions</th>
+            </tr>
+
+            <tr *ngFor="let item of customers">
+              <td> {{item.MobileNumber}} </td>
+              <td> {{item.createdAt | date:"shortDate"}} </td>
+              <td> <button class="w3-btn w3-red">Block</button> </td>
+            </tr>
+            
+            </table>
+            </div>
+      </ion-col>
+      <ion-col size="6"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="isVehicleAdd">
+    <ion-row>
+      <ion-col size="6" offset="3">
+        <form [formGroup]="catForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="floating">Category <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required formControlName="category" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Model <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required formControlName="model" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Capacity <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required formControlName="capacity" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Rate <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required formControlName="rate" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Monthly Subscription <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required formControlName="monthlySubscription" type="number"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <input type="file" name="file" id="" (change)="fileEvent($event)">
+          </ion-item>
+          <ion-button block color="primary" type="submit" [disabled]="catForm.invalid">
+            Add
+          </ion-button>
+        </form>
+      </ion-col>
+      <ion-col size="6"></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

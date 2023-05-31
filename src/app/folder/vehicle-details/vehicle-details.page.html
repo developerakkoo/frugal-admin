@@ -1,0 +1,11 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Vehicle details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-text class="ion-text-center" color="dark" *ngIf="driver.length == 0">
+  <h3>No Drivers Registered</h3>
+ </ion-text>
+</ion-content>
