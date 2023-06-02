@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'google-maps',
     loadChildren: () => import('./google-maps/google-maps.module').then( m => m.GoogleMapsPageModule)
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+  },
  
 ];
 

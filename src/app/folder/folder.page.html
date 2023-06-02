@@ -14,24 +14,24 @@
   
   <ion-grid *ngIf="isHome">
     <ion-row>
-      <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+      <!-- <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Approval Pending</ion-card-subtitle>
             <ion-card-title>15</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <!-- <ion-button (click)="view('pending')" expand="block" fill="clear">
+            <ion-button (click)="view('pending')" expand="block" fill="clear">
               View
-            </ion-button> -->
+            </ion-button>
           </ion-card-content>
         </ion-card>
-      </ion-col>
+      </ion-col> -->
       <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Category</ion-card-subtitle>
-            <ion-card-title>20</ion-card-title>
+            <ion-card-title> {{categoryCount || 0}} </ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <!-- <ion-button (click)="view('category')" expand="block" fill="clear">
@@ -43,7 +43,7 @@
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Partner Active</ion-card-subtitle>
-            <ion-card-title> {{partners.length || 0}} </ion-card-title>
+            <ion-card-title> {{activeVehicleCount || 0}} </ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <!-- <ion-button (click)="view('partneractive')" expand="block" fill="clear">
@@ -55,7 +55,7 @@
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Vehicles</ion-card-subtitle>
-            <ion-card-title>60</ion-card-title>
+            <ion-card-title> {{vehicleCount || 0}} </ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <!-- <ion-button (click)="view('vehicles')" expand="block" fill="clear">
@@ -63,23 +63,23 @@
             </ion-button> -->
           </ion-card-content>
         </ion-card>
-      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+      </ion-col>
+      <!-- <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Services</ion-card-subtitle>
             <ion-card-title>33</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <!-- <ion-button (click)="view('services')" expand="block" fill="clear">
-              View
-            </ion-button> -->
+         
           </ion-card-content>
         </ion-card>
-      </ion-col><ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
+      </ion-col> -->
+      <ion-col sizeLg="3" sizeMd="4" sizeSm="3" sizeXs="12">
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Customers</ion-card-subtitle>
-            <ion-card-title> {{customers.length}}</ion-card-title>
+            <ion-card-title> {{ userCount || 0}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <!-- <ion-button (click)="view('customers')" expand="block" fill="clear">
@@ -91,7 +91,7 @@
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Partners InActive</ion-card-subtitle>
-            <ion-card-title>4</ion-card-title>
+            <ion-card-title> {{inactiveVehicleCount || 0}} </ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <!-- <ion-button (click)="view('partnerinactive')" expand="block" fill="clear">
@@ -152,7 +152,7 @@
               <td>
                 <button class="w3-button w3-green" (click)="save(item._id, cap.value,model.value, rate.value)">SAVE</button>
                 <button class="w3-button w3-red" *ngIf="!item.isBlocked" (click)="block(item._id)">BLOCK</button>
-                <button class="w3-button w3-orange" *ngIf="item.isBlocked" (click)="block(item._id)">UNBLOCK</button>
+                <button class="w3-button w3-orange" *ngIf="item.isBlocked" (click)="unblock(item._id)">UNBLOCK</button>
               </td>
             </tr>
           </table>

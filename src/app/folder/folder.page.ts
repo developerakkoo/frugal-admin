@@ -27,11 +27,19 @@ export class FolderPage implements OnInit {
   modeltype!: string;
   rates!: string;
 
+  categoryCount!:any;
+  userCount!:any;
+  vehicleCount!:any;
+  activeVehicleCount!:any;
+  inactiveVehicleCount!:any;
   file!: File;
   partners: any[] = [];
   customers: any[] = [];
   getAllPartnerSub!: Subscription;
   getAllCustomerSub!: Subscription;
+  getAllCountsSub!: Subscription;
+  getActiveVehicleSub!:Subscription;
+
   constructor(private router: Router,
     private handler: HandlerService,
     private menuCtrl: MenuController,
@@ -40,6 +48,7 @@ export class FolderPage implements OnInit {
     private fb: FormBuilder
   ) {
     this.menuCtrl.enable(true);
+    this.getAllCount();
     
   }
 
@@ -93,6 +102,50 @@ export class FolderPage implements OnInit {
     }
   }
 
+  getActiveVehicles(){
+    this.getActiveVehicleSub =  this.http.get(environment.URL +'/Active/vehicle')
+    .subscribe({
+      next:(value:any) =>{       
+         console.log(value);
+          this.activeVehicleCount = value['length'];
+          this.getInActiveVehicles();
+      },
+      error:(error) =>{
+        console.log(error);
+        
+      }
+    })
+  }
+
+  getInActiveVehicles(){
+    this.getActiveVehicleSub =  this.http.get(environment.URL +'/InActive/vehicle')
+    .subscribe({
+      next:(value:any) =>{       
+         console.log(value);
+          this.inactiveVehicleCount = value['length'];
+      },
+      error:(error) =>{
+        console.log(error);
+        
+      }
+    })
+  }
+
+  getAllCount(){
+    this.getAllCountsSub = this.http.get(environment.URL +'/App/api/v1/count').subscribe({
+      next:(value:any) =>{
+        console.log(value)
+        this.userCount = value['user'];
+        this.vehicleCount = value['owner'];
+        this.categoryCount = value['cat'];
+        this.getActiveVehicles();
+      },
+      error: (error) =>{
+        console.log(error);
+        
+      }
+    })
+  }
   getAllCustomers(){
     this.getAllCustomerSub = this.http.get(environment.URL + '/App/api/v1/all/user').subscribe({
       next: (value: any) => {
@@ -182,7 +235,43 @@ export class FolderPage implements OnInit {
   }
 
   block(id:any){
+    this.handler.presentLoading("blocking...");
 
+    this.http.put(environment.URL + `/Block/vehicle/${id}`, {
+      isBlocked: true
+    }).subscribe({
+      next:(value:any) =>{
+        console.log(value);
+        this.handler.dismissLoading();
+
+        this.getAllPartnersVehicles();
+        
+      },
+      error:(error) =>{
+        console.log(error);
+        this.handler.dismissLoading();
+        
+      }
+    })
+  }
+
+  unblock(id:any){
+    this.handler.presentLoading("Unblocking...");
+    this.http.put(environment.URL + `/Block/vehicle/${id}`, {
+      isBlocked: false
+    }).subscribe({
+      next:(value:any) =>{
+        console.log(value);
+        this.handler.dismissLoading();
+        this.getAllPartnersVehicles();
+        
+      },
+      error:(error) =>{
+        console.log(error);
+        this.handler.dismissLoading();
+        
+      }
+    })
   }
 
   fileEvent(ev: any) {
@@ -194,8 +283,7 @@ export class FolderPage implements OnInit {
   onSubmit() {
     this.handler.presentLoading("Adding Category...");
     let formdata = new FormData();
-
-    formdata.append("category", this.catForm.value.category);
+    formdata.append("category", this.catForm.value.category.toString().toUpperCase());
     formdata.append("model", this.catForm.value.model);
     formdata.append("rate", this.catForm.value.rate);
     formdata.append("capcity", this.catForm.value.capacity);
