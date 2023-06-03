@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
           console.log(value);
           this.handler.presentToast("Login Successfull");
           this.handler.dismissLoading();
-          this.router.navigate(['folder', 'home',]);
+          this.router.navigate(['folder', 'home', value['postResponse']['userId']]);
         },
         error:(error) =>{
           console.log(error);

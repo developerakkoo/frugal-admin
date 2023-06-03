@@ -14,6 +14,8 @@ import { GoogleMapsPage } from '../google-maps/google-maps.page';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
+  userId:any;
+
   catForm!: FormGroup;
   public folder!: string;
   private activatedRoute = inject(ActivatedRoute);
@@ -43,11 +45,13 @@ export class FolderPage implements OnInit {
   constructor(private router: Router,
     private handler: HandlerService,
     private menuCtrl: MenuController,
+    private route:ActivatedRoute,
     private modalController: ModalController,
     private http: HttpClient,
     private fb: FormBuilder
   ) {
     this.menuCtrl.enable(true);
+    this.userId = this.route.snapshot.paramMap.get("userId");
     this.getAllCount();
     
   }
@@ -200,6 +204,10 @@ export class FolderPage implements OnInit {
 
   openVehiclePage(){
     this.router.navigate(['folder','add-vehicles', 'add-vehicles']);
+  }
+
+  openRequestPage(){
+    this.router.navigate(['requests', this.userId]);
   }
   save(id: string, cap: any, model: any, rate: any) {
 
