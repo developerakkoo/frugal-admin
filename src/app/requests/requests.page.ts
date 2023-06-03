@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-requests',
@@ -20,13 +21,15 @@ export class RequestsPage implements OnInit {
 
   constructor(private http: HttpClient,
     private route:ActivatedRoute,
+    private data: DataService,
               private loadingController: LoadingController) { 
-                this.adminId = this.route.snapshot.paramMap.get("userId");
                 this.getOwners();
               }
 
-  ngOnInit() {
-
+  async ngOnInit() {
+    this.adminId = await this.data.get('userId');
+    console.log(`Admin id is ${this.adminId}`);
+    
   }
 
 

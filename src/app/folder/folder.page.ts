@@ -207,7 +207,7 @@ export class FolderPage implements OnInit {
   }
 
   openRequestPage(){
-    this.router.navigate(['requests', this.userId]);
+    this.router.navigate(['requests']);
   }
   save(id: string, cap: any, model: any, rate: any) {
 

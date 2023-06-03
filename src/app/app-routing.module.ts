@@ -8,7 +8,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id/:userId',
+    path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'requests/:userId',
+    path: 'requests',
     loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule)
   },
  

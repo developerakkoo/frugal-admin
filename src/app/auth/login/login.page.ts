@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { HandlerService } from 'src/app/services/handler.service';
 import { environment } from 'src/environments/environment';
 
@@ -21,6 +22,7 @@ export class LoginPage implements OnInit {
   constructor(private menuCtrl: MenuController,
               private handler: HandlerService,
               private router: Router,
+              private data: DataService,
               private http: HttpClient,
               private fb: FormBuilder) {
                 this.menuCtrl.enable(false);
@@ -46,7 +48,13 @@ export class LoginPage implements OnInit {
           console.log(value);
           this.handler.presentToast("Login Successfull");
           this.handler.dismissLoading();
-          this.router.navigate(['folder', 'home', value['postResponse']['userId']]);
+          this.data.set("userId", value['postResponse']['userId']).then(() =>{
+            this.router.navigate(['folder', 'home']);
+
+          }).catch((error) =>{
+            console.log(error);
+            
+          })
         },
         error:(error) =>{
           console.log(error);
